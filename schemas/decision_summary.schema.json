@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DecisionSummary",
+  "type": "object",
+  "required": ["decisions"],
+  "properties": {
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["candidate_id", "decision", "score"],
+        "properties": {
+          "candidate_id": {"type": "string"},
+          "decision": {"enum": ["GO", "CONDITIONAL GO", "NO-GO"]},
+          "score": {"type": "number"}
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+default_domain: chemical_and_materials_engineering
+case_study_domain: biomass_derived_energy_storage_carbon
+include_keywords:
+  - biomass carbon
+  - hard carbon
+  - porous carbon
+  - supercapacitor
+  - sodium-ion battery
+  - lithium-ion battery
+  - carbonization
+  - activation
+  - precursor composition
+  - structure-property relationship
+  - Bayesian optimization
+exclude_keywords_by_default:
+  - catalyst
+  - electrocatalysis
+  - electrolyte additive
+  - separator
+science_first_rules:
+  require_material_variable: true
+  require_measurable_endpoint: true
+  require_mve: true
+  ai_must_be_justified: true

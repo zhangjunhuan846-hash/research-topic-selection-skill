@@ -1,0 +1,64 @@
+{
+  "reviews": [
+    {
+      "candidate_id": "CAND-YIELD-NORM-SC",
+      "scores": {
+        "scientific_problem_strength": 85,
+        "novelty_potential": 72,
+        "collision_risk_inverse": 62,
+        "experimental_feasibility": 82,
+        "data_availability": 70,
+        "mve_clarity": 68,
+        "publication_potential": 76,
+        "phd_continuity": 75,
+        "ai_necessity": 55
+      },
+      "weighted_score": 74.0,
+      "red_flags": [],
+      "critic_notes": [
+        "AI should be framed as secondary support rather than the main novelty.",
+        "Run full collision search before claiming novelty."
+      ]
+    },
+    {
+      "candidate_id": "CAND-COMP-NORM-HC",
+      "scores": {
+        "scientific_problem_strength": 88,
+        "novelty_potential": 72,
+        "collision_risk_inverse": 62,
+        "experimental_feasibility": 76,
+        "data_availability": 70,
+        "mve_clarity": 82,
+        "publication_potential": 72,
+        "phd_continuity": 86,
+        "ai_necessity": 55
+      },
+      "weighted_score": 75.7,
+      "red_flags": [],
+      "critic_notes": [
+        "AI should be framed as secondary support rather than the main novelty.",
+        "Run full collision search before claiming novelty."
+      ]
+    },
+    {
+      "candidate_id": "CAND-ACCESSIBLE-PORE-SC",
+      "scores": {
+        "scientific_problem_strength": 85,
+        "novelty_potential": 72,
+        "collision_risk_inverse": 62,
+        "experimental_feasibility": 70,
+        "data_availability": 62,
+        "mve_clarity": 68,
+        "publication_potential": 72,
+        "phd_continuity": 75,
+        "ai_necessity": 55
+      },
+      "weighted_score": 71.1,
+      "red_flags": [],
+      "critic_notes": [
+        "AI should be framed as secondary support rather than the main novelty.",
+        "Run full collision search before claiming novelty."
+      ]
+    }
+  ]
+}

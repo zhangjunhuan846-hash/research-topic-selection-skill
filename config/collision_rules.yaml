@@ -1,0 +1,13 @@
+precise_query_count: 10
+broad_query_count: 5
+collision_categories:
+  direct_collision: same material system + same variable + same target + same validation logic
+  partial_collision: same material system or target but different variable, validation, or scope
+  adjacent_acceptable: related field that informs the topic but does not remove novelty
+required_output_fields:
+  - candidate_id
+  - precise_queries
+  - broad_queries
+  - direct_collision_definition
+  - partial_collision_definition
+  - adjacent_acceptable_definition

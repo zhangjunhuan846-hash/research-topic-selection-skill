@@ -1,0 +1,20 @@
+default_domain: chemical_and_materials_engineering
+case_study_domain: biomass_derived_energy_storage_carbon
+include_keywords:
+  - biomass carbon
+  - hard carbon
+  - porous carbon
+  - supercapacitor
+  - sodium-ion battery
+  - lithium-ion battery
+exclude_keywords_by_default:
+  - catalyst
+  - electrolyte additive
+user_constraints:
+  avoid:
+    - catalyst-only topics
+    - electrolyte-only topics
+  prefer:
+    - science-first framing
+    - biomass-derived storage carbon
+    - master's-stage MVE

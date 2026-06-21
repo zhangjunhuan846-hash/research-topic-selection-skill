@@ -1,0 +1,56 @@
+{
+  "problems": [
+    {
+      "problem_id": "P-YIELD-PERFORMANCE",
+      "problem": "High surface area or high capacity reports often ignore carbon yield, activation cost, and volumetric relevance.",
+      "material_variables": [
+        "activation severity",
+        "carbonization temperature",
+        "precursor composition",
+        "ash removal"
+      ],
+      "measurable_endpoints": [
+        "carbon yield",
+        "BET",
+        "volumetric capacitance",
+        "ICE"
+      ]
+    },
+    {
+      "problem_id": "P-HARD-CARBON-PRECURSOR",
+      "problem": "Biomass labels are weak descriptors; composition-normalized precursor variables may better explain hard-carbon ICE and plateau capacity.",
+      "material_variables": [
+        "cellulose/lignin ratio",
+        "ash content",
+        "washing",
+        "carbonization temperature"
+      ],
+      "measurable_endpoints": [
+        "ICE",
+        "reversible capacity",
+        "plateau fraction",
+        "d002",
+        "ID/IG"
+      ]
+    },
+    {
+      "problem_id": "P-ION-ACCESSIBILITY",
+      "problem": "Gas-accessible surface area and electrochemically accessible pore volume can diverge across aqueous supercapacitor electrodes.",
+      "material_variables": [
+        "pore size distribution",
+        "activation route",
+        "mass loading",
+        "electrode density"
+      ],
+      "measurable_endpoints": [
+        "specific capacitance",
+        "rate retention",
+        "thickness",
+        "compacted density"
+      ]
+    }
+  ],
+  "notes": [
+    "Science-first problem map generated from corpus keyword profile."
+  ]
+}

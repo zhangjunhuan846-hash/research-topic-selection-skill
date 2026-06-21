@@ -1,0 +1,72 @@
+{
+  "n_records": 5,
+  "columns": [
+    "title",
+    "abstract",
+    "year",
+    "journal",
+    "doi",
+    "keywords",
+    "system",
+    "material",
+    "performance_metric"
+  ],
+  "year_min": 2022,
+  "year_max": 2025,
+  "missing_by_column": {
+    "title": 0,
+    "abstract": 0,
+    "year": 0,
+    "journal": 0,
+    "doi": 0,
+    "keywords": 0,
+    "system": 0,
+    "material": 0,
+    "performance_metric": 0
+  },
+  "keyword_counts": {
+    "biomass": 3,
+    "hard carbon": 2,
+    "porous carbon": 2,
+    "supercapacitor": 2,
+    "sodium": 2,
+    "lithium": 0,
+    "activation": 1,
+    "carbonization": 1,
+    "pore": 3,
+    "BET": 3,
+    "d002": 1,
+    "Raman": 0,
+    "machine learning": 1,
+    "Bayesian": 0,
+    "optimization": 0,
+    "yield": 1,
+    "precursor": 2,
+    "lignin": 1,
+    "cellulose": 1,
+    "hemicellulose": 0
+  },
+  "scope_keyword_hits": {
+    "biomass carbon": 1,
+    "hard carbon": 2,
+    "porous carbon": 2,
+    "supercapacitor": 2,
+    "sodium-ion battery": 0,
+    "lithium-ion battery": 0,
+    "catalyst": 0,
+    "electrolyte additive": 0
+  },
+  "dense_themes": [
+    "biomass",
+    "pore",
+    "BET",
+    "hard carbon",
+    "porous carbon",
+    "supercapacitor",
+    "sodium",
+    "precursor"
+  ],
+  "data_quality_notes": [
+    "small corpus; use as pilot only"
+  ]
+}

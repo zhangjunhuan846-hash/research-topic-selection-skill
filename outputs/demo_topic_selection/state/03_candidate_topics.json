@@ -1,0 +1,62 @@
+{
+  "candidates": [
+    {
+      "candidate_id": "CAND-YIELD-NORM-SC",
+      "title": "Yield-normalized design of biomass porous carbon for aqueous supercapacitors",
+      "science_question": "Can activation benefits be evaluated by a yield-normalized, electrode-relevant metric rather than gravimetric capacitance alone?",
+      "hypothesis": "Moderate activation that preserves yield and electrode density can outperform extreme activation under practical metrics.",
+      "variables": [
+        "activation severity",
+        "carbonization temperature",
+        "precursor composition",
+        "ash removal"
+      ],
+      "target_metrics": [
+        "carbon yield",
+        "BET",
+        "volumetric capacitance",
+        "ICE"
+      ],
+      "ai_role": "optional: literature meta-analysis and candidate prioritization, not primary novelty"
+    },
+    {
+      "candidate_id": "CAND-COMP-NORM-HC",
+      "title": "Composition-normalized screening of biomass hard-carbon precursors",
+      "science_question": "Do cellulose/lignin/ash descriptors explain SIB hard-carbon ICE better than biomass labels?",
+      "hypothesis": "Composition-normalized descriptors reduce label noise and improve early-cycle performance interpretation.",
+      "variables": [
+        "cellulose/lignin ratio",
+        "ash content",
+        "washing",
+        "carbonization temperature"
+      ],
+      "target_metrics": [
+        "ICE",
+        "reversible capacity",
+        "plateau fraction",
+        "d002",
+        "ID/IG"
+      ],
+      "ai_role": "useful: descriptor ranking and small-data modeling after frozen experimental protocol"
+    },
+    {
+      "candidate_id": "CAND-ACCESSIBLE-PORE-SC",
+      "title": "Ion-accessible pore descriptors for aqueous supercapacitor biomass carbons",
+      "science_question": "Which pore descriptors remain predictive under realistic mass loading and electrode thickness?",
+      "hypothesis": "Ion-accessible pore volume and electrode engineering descriptors outperform BET alone for practical SC performance.",
+      "variables": [
+        "pore size distribution",
+        "activation route",
+        "mass loading",
+        "electrode density"
+      ],
+      "target_metrics": [
+        "specific capacitance",
+        "rate retention",
+        "thickness",
+        "compacted density"
+      ],
+      "ai_role": "useful: multi-descriptor correlation and uncertainty-aware screening"
+    }
+  ]
+}
