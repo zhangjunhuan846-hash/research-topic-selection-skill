@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TriggerDecision",
+  "type": "object",
+  "required": [
+    "selected_mode",
+    "trigger_reasons",
+    "modules_to_run",
+    "modules_to_skip",
+    "escalation_allowed_later"
+  ],
+  "properties": {
+    "selected_mode": {
+      "enum": [
+        "LIGHT",
+        "STANDARD",
+        "HIGH_RISK"
+      ]
+    },
+    "initial_risk_level": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "trigger_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "non_trigger_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "modules_to_run": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "modules_to_skip": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "auditors_to_run": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "prior-art-auditor",
+          "methodology-auditor",
+          "feasibility-auditor"
+        ]
+      }
+    },
+    "escalation_allowed_later": {
+      "type": "boolean"
+    },
+    "escalation_watchpoints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "token_budget_note": {
+      "type": "string"
+    },
+    "rationale": {
+      "type": "string"
+    },
+    "auditors_to_consider": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "prior-art-auditor",
+          "methodology-auditor",
+          "feasibility-auditor"
+        ]
+      }
+    }
+  },
+  "additionalProperties": true
+}

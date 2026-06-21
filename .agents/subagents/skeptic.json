@@ -1,0 +1,21 @@
+{
+  "name": "topic_skeptic",
+  "purpose": "Attack a candidate research topic for novelty, feasibility, confounding, and scope problems.",
+  "inputs": [
+    "topic_intake.json",
+    "trigger_decision.json",
+    "evidence_pack.json",
+    "prior_art_report.json",
+    "novelty_gate_report.json",
+    "feasibility_report.json",
+    "collapse_test_report.json"
+  ],
+  "outputs": [
+    "skeptic_position.md"
+  ],
+  "rules": [
+    "Identify fatal and fixable flaws separately.",
+    "Do not reject merely because a topic is difficult.",
+    "State what evidence would change the decision."
+  ]
+}

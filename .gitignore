@@ -1,0 +1,57 @@
+# Runtime outputs and private research data
+# Keep the reusable skill clean; store real project runs outside the public skill repo.
+
+tasks/*
+!tasks/.gitkeep
+
+literature/raw/*
+!literature/raw/.gitkeep
+literature/processed/*
+!literature/processed/.gitkeep
+
+runs/
+outputs/
+cache/
+.tmp/
+
+# Large/private source files
+*.xlsx
+*.xls
+*.xlsm
+*.pdf
+*.docx
+*.pptx
+*.zip
+*.7z
+*.rar
+
+# Extracted/private literature tables
+*.jsonl
+*_dedup.csv
+*_records.csv
+*_database.csv
+数据库.csv
+
+# Allow lightweight examples even if they use tabular formats
+!examples/**/*.csv
+!examples/**/*.json
+!examples/**/*.md
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log

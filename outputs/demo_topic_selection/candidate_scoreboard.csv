@@ -1,4 +1,0 @@
-candidate_id,title,decision,score,conditions
-CAND-COMP-NORM-HC,Composition-normalized screening of biomass hard-carbon precursors,CONDITIONAL GO,75.7,"['complete collision search', 'sharpen MVE endpoint', 'downgrade AI claims unless validated']"
-CAND-YIELD-NORM-SC,Yield-normalized design of biomass porous carbon for aqueous supercapacitors,CONDITIONAL GO,74.0,"['complete collision search', 'sharpen MVE endpoint', 'downgrade AI claims unless validated']"
-CAND-ACCESSIBLE-PORE-SC,Ion-accessible pore descriptors for aqueous supercapacitor biomass carbons,CONDITIONAL GO,71.1,"['complete collision search', 'sharpen MVE endpoint', 'downgrade AI claims unless validated']"

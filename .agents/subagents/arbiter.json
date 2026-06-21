@@ -1,0 +1,19 @@
+{
+  "name": "topic_arbiter",
+  "purpose": "Integrate advocate and skeptic positions into a final GO/REVISE/NARROW/PIVOT/KILL decision.",
+  "inputs": [
+    "advocate_position.md",
+    "trigger_decision.json",
+    "skeptic_position.md",
+    "all_gate_reports"
+  ],
+  "outputs": [
+    "topic_decision.json",
+    "topic_decision_brief.md"
+  ],
+  "rules": [
+    "Use one final decision label.",
+    "Prefer precise narrowing to vague encouragement.",
+    "Separate evidence, inference, and recommendation."
+  ]
+}

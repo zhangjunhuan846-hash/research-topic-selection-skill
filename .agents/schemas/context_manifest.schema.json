@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ContextManifest",
+  "type": "object",
+  "required": [
+    "topic_id",
+    "evidence_tier",
+    "sources",
+    "boundary_terms",
+    "exclusion_terms"
+  ],
+  "properties": {
+    "topic_id": {
+      "type": "string"
+    },
+    "evidence_tier": {
+      "enum": [
+        "Tier 0",
+        "Tier 1",
+        "Tier 2",
+        "Mixed"
+      ]
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "path_or_query": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "boundary_terms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exclusion_terms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "known_limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

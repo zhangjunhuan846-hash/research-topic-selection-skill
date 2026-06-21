@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FeasibilityReport",
+  "type": "object",
+  "required": [
+    "feasibility_label",
+    "resource_gaps",
+    "minimum_viable_validation",
+    "failure_criteria"
+  ],
+  "properties": {
+    "feasibility_label": {
+      "enum": [
+        "ready",
+        "limited_but_workable",
+        "needs_key_resource",
+        "not_feasible"
+      ]
+    },
+    "resource_gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "confounders": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "minimum_viable_validation": {
+      "type": "object",
+      "properties": {
+        "minimum_dataset_or_sample_count": {
+          "type": "string"
+        },
+        "primary_endpoint": {
+          "type": "string"
+        },
+        "secondary_endpoints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "necessary_controls": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "decision_threshold": {
+          "type": "string"
+        }
+      }
+    },
+    "failure_criteria": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "feasibility_risk_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    }
+  },
+  "additionalProperties": true
+}

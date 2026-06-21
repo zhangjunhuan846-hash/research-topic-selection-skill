@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TopicIntake",
+  "type": "object",
+  "required": [
+    "candidate_topic",
+    "field_boundary",
+    "task_type",
+    "risk_level",
+    "available_evidence",
+    "target_output"
+  ],
+  "properties": {
+    "candidate_topic": {
+      "type": "string"
+    },
+    "field_boundary": {
+      "type": "string"
+    },
+    "non_boundary": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "task_type": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "topic_generation",
+          "topic_validation",
+          "novelty_check",
+          "prior_art_attack",
+          "feasibility_check",
+          "scope_narrowing",
+          "topic_pivot",
+          "decision_brief"
+        ]
+      }
+    },
+    "risk_level": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "available_evidence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "available_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "claimed_novelty": {
+      "type": "string"
+    },
+    "target_journal_level": {
+      "type": "string"
+    },
+    "target_output": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "decision_consequence": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "quick_screening",
+          "advisor_discussion",
+          "group_meeting",
+          "paper_plan",
+          "thesis_chapter",
+          "opening_report",
+          "manuscript_submission",
+          "grant_or_proposal",
+          "expensive_experiment",
+          "long_term_research_direction"
+        ]
+      }
+    },
+    "requested_mode": {
+      "enum": [
+        "LIGHT",
+        "STANDARD",
+        "HIGH_RISK"
+      ]
+    },
+    "evidence_tier_available": {
+      "enum": [
+        "none",
+        "Tier 0",
+        "Tier 1",
+        "Tier 2",
+        "Mixed"
+      ]
+    },
+    "token_budget_preference": {
+      "enum": [
+        "minimize",
+        "balanced",
+        "quality_first"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

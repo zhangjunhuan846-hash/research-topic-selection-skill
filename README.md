@@ -1,357 +1,232 @@
 # Research Topic Selection Skill v3
 
-<p align="center">
-  <b>面向化工与材料研究的 Science-first 多 Agent 选题筛选 Skill</b><br>
-  从文献语料、科学问题、撞车风险、最小验证实验和博士延展性五个维度，系统筛选真正值得做的研究方向。
-</p>
+面向“研究型论文选题”的低 token、多阶段、可证伪工作流。v3 的核心变化是加入 **tiered triggering / 分级触发机制**：先用轻量流程做初筛，只有在证据风险、投入成本或决策后果足够高时，才升级到标准评估或高风险多角色对抗评审。
 
-<p align="center">
-  <img alt="version" src="https://img.shields.io/badge/version-v3.0.0-blue">
-  <img alt="workflow" src="https://img.shields.io/badge/workflow-multi--agent-purple">
-  <img alt="context" src="https://img.shields.io/badge/context-JSON--first-green">
-  <img alt="domain" src="https://img.shields.io/badge/domain-chemical%20%26%20materials%20engineering-orange">
-  <img alt="decision" src="https://img.shields.io/badge/decision-GO%20%7C%20CONDITIONAL%20GO%20%7C%20NO--GO-red">
-</p>
+本包只处理研究型论文选题，不执行 manuscript review、章节改写、patch writing 或语言润色。
 
----
+## 这个 skill 解决什么问题
 
-## 01. 这个 Skill 解决什么问题？
+它用于判断一个研究型论文选题是否值得继续推进，核心问题包括：
 
-很多材料科研选题看起来“新”，但真正推进时会暴露出几个问题：
+1. 这个题目是否只是换材料、换体系、换说法？
+2. 已有文献是否已经做过类似工作？
+3. 科学问题是否足够清晰，而不是“材料堆砌”或“数据堆砌”？
+4. 是否存在可检验假设、最小可行验证方案和明确失败标准？
+5. 选题是否能被压缩成一篇有发表潜力的论文，而不是无限扩张成综述或项目申请书？
+6. 应该使用轻量模式、标准模式，还是高风险对抗评审？
 
-- 只是把 AI/机器学习套在已有材料体系上，没有清楚的材料科学问题；
-- 只看标题和摘要，忽略了已经被大量研究的直接撞车方向；
-- 选题听起来宏大，但没有最小可验证实验，研一/研二阶段难以落地；
-- 只有算法亮点，没有样品、表征、性能指标和失败判据；
-- 课题无法形成硕士到博士的连续研究故事。
-
-`research-topic-selection-skill-v3` 的目标不是“自动生成灵感”，而是提供一个 **可审计、可复盘、可继续迭代的选题决策工作流**：
-
-> 先判断科学问题是否成立，再判断是否需要 AI；先判断是否能做最小验证，再判断是否值得扩展为长期方向。
-
----
-
-## 02. 核心定位
-
-**中文定位**
-
-> 面向化工与材料研究的多 Agent 选题筛选 Skill：从文献语料中识别研究空白，生成候选方向，进行撞车风险规划、创新性审查、可行性评估、最小验证实验设计和 GO / CONDITIONAL GO / NO-GO 决策。
-
-**English positioning**
-
-> A Codex-native, JSON-first multi-agent skill for science-first research topic selection in chemical and materials engineering, focusing on corpus-driven opportunity mining, collision-risk planning, feasibility critique, minimum viable experiment design, and decision-gated research roadmapping.
-
----
-
-## 03. 设计原则
-
-### Science-first，而不是 AI-first
-
-本 Skill 默认采用以下审查顺序：
+## 分级触发总览
 
 ```text
-材料科学问题是否真实存在？
-        ↓
-该问题是否能通过可控实验或可靠数据验证？
-        ↓
-AI 是否能降低搜索成本、提高归纳能力或形成闭环？
-        ↓
-该选题是否具有论文产出和博士延展性？
+LIGHT / 轻量模式
+用于：早期想法、多个候选题初筛、局部范围判断
+特点：不启动多角色对抗；只做低成本硬过滤和简短判断
+
+STANDARD / 标准模式
+用于：准备向导师汇报、准备投入系统文献或小规模数据分析
+特点：完整跑 prior-art、novelty、feasibility、collapse-test 和 topic-arbiter
+
+HIGH_RISK / 高风险模式
+用于：博士论文方向、开题、投稿策略、基金/课题设计、昂贵实验决策
+特点：在标准模式基础上，追加专业 auditor，并触发 Advocate / Skeptic / Arbiter 对抗裁决
 ```
 
-如果一个候选方向只有“机器学习 + SHAP + 设计规则”，但没有明确的材料变量、物理机制、实验判据和失败边界，它会被降级。
+## 主工作流
 
-### 不夸大创新，不伪造文献
+```text
+research-topic-intake-router
+→ tiered-trigger-router
+→ literature-context-builder, as required by mode
+→ prior-art-topic-filter
+→ novelty-gate
+→ feasibility-gate, STANDARD/HIGH_RISK
+→ collapse-test, STANDARD/HIGH_RISK
+→ prior-art-auditor, HIGH_RISK optional
+→ methodology-auditor, HIGH_RISK optional
+→ feasibility-auditor, HIGH_RISK optional
+→ targeted-conflict-gate, HIGH_RISK
+→ topic-arbiter
+→ topic-brief-writer
+→ workflow-archivist
+```
 
-撞车审计只生成检索策略和风险定义，不编造 DOI，不虚构引用。需要外部检索时，输出 precise queries、broad queries、direct collision、partial collision 和 adjacent acceptable 的判据。
+## 三档模式的默认执行范围
 
-### 选题必须能落地
+| 模式 | 典型用途 | 默认模块 | 是否多角色对抗 |
+|---|---|---|---|
+| `LIGHT` | 早期想法、候选题粗筛、判断是否值得继续查 | intake、tiered route、prior-art quick scan、novelty quick gate、brief | 否 |
+| `STANDARD` | 正式判断单个选题是否值得推进 | intake、context、prior-art、novelty、feasibility、collapse-test、arbiter、brief、archive | 默认否 |
+| `HIGH_RISK` | 开题/投稿/基金/大规模实验前决策 | STANDARD 全部模块 + auditors + conflict gate | 是 |
 
-每个候选方向都必须输出：
+## 升级规则
 
-- 主科学问题；
-- 可控变量；
-- 最小验证实验；
-- 表征与性能指标；
-- kill criteria；
-- 预期第一篇论文形态；
-- 后续博士阶段延展路径。
+从 `LIGHT` 升级到 `STANDARD`，如果出现任一情况：
+
+- 选题要提交导师或用于组会汇报；
+- 用户要求输出 GO / REVISE / NARROW / PIVOT / KILL；
+- 需要判断 feasibility、数据量、实验设计或最小验证方案；
+- 出现直接 prior art、强相似工作或明显 scope bloat；
+- novelty 只能给出 conditional pass。
+
+从 `STANDARD` 升级到 `HIGH_RISK`，如果出现任一情况：
+
+- prior-art risk score ≥ 4；
+- novelty decision = `fail`，但用户仍考虑推进；
+- feasibility label = `needs_key_resource` 或 `not_feasible`；
+- collapse-test 返回 `survives_if_narrowed`、`needs_pivot` 或 `collapses`；
+- 该决策会影响博士课题方向、开题、投稿、基金或昂贵实验投入；
+- 用户明确要求多角色冲突评审。
+
+## 输出结果
+
+最终输出不是一篇初稿，而是一个 research-topic decision brief：
+
+```text
+GO / REVISE / NARROW / PIVOT / KILL
+```
+
+并附带：
+
+- 题目一句话版本；
+- novelty claim；
+- prior-art risk；
+- feasibility risk；
+- collapse-test 结果；
+- 分级触发理由；
+- 最小可行验证方案；
+- 下一步执行清单。
+
+## 与 v2 的区别
+
+v2 已经把 manuscript review 从主线中剥离。v3 进一步加入了 **分级触发机制**：
+
+- 轻量问题不再默认跑完整链路；
+- 标准问题保留完整选题判断；
+- 高风险问题才启动 auditor 和 Advocate / Skeptic / Arbiter；
+- 每次升级或不升级都必须给出 `trigger_decision.json` 记录，避免随意开 agent 浪费 token。
+
+## 目录结构
+
+```text
+.
+├── AGENTS.md
+├── README.md
+├── WORKSPACE_POLICY.md
+├── package_note.md
+├── .agents/
+│   ├── skills/
+│   ├── schemas/
+│   ├── prompts/
+│   └── subagents/
+├── skills/                       # mirrored skills for compatibility
+├── scripts/
+├── examples/
+├── docs/domain_packs/
+├── tests/
+├── literature/                   # placeholders only; keep private data outside the repo
+└── tasks/                        # placeholder only; keep real task runs outside the repo
+```
+
+## Codex 使用示例
+
+```text
+Use $research-topic-selection-skill to validate this research topic:
+"Composition-normalized screening of biomass hard-carbon precursors for sodium-ion battery first-cycle ICE."
+
+Inputs:
+- candidate topic: ...
+- field boundary: biomass-derived hard carbon / sodium-ion batteries
+- available data: Scopus abstracts, cleaned descriptor table, limited experimental validation
+- target output: GO / REVISE / NARROW / PIVOT / KILL decision brief
+
+Use tiered triggering. Start with the lowest sufficient mode and escalate only if the trigger rules require it.
+Run only the topic-selection workflow. Do not perform manuscript review.
+```
+
+## How to run divergent ideation
+
+Use this mode when generated topics are too repetitive, too concentrated on one variable path, or need a broader research-direction pool before formal GO / REVISE / NARROW / PIVOT / KILL evaluation.
+
+Example prompt:
+
+```text
+Use $research-topic-selection-skill in Divergent Ideation Mode. My current topics are too repetitive. Generate a broad topic pool across 8 research lenses, avoid crowded hard-carbon axes, run light collision pre-screen, and output topic_pool.md, topic_pool.json, and divergent_ideation_report.md.
+```
+
+If using Codex CLI:
+
+```text
+codex exec -C . "Use the research-topic-selection-skill in Divergent Ideation Mode. Generate a diverse topic pool for biomass/model hard-carbon SIB research, avoiding cellulose:lignin ratio, Al2O3 addition, natural biomass impurity removal, and broad precursor screening as main novelty axes. Output topic_pool.md, topic_pool.json, and divergent_ideation_report.md."
+```
+
+Divergent Ideation Mode follows this order:
+
+```text
+topic intake
+→ identify crowded axes and unsafe novelty axes
+→ generate candidates across 8 independent lenses
+→ enforce diversity constraints
+→ light collision pre-screen
+→ topic family deduplication
+→ shortlist 3–5 candidates for deeper evaluation
+```
+
+It must output a topic pool, not a final single topic. Formal topic decisions still use the existing GO / REVISE / NARROW / PIVOT / KILL workflow after collision screening and narrowing.
+
 
 ---
 
-## 04. 多 Agent 架构
+# README Supplement — GitHub/Codex Usage Notes
 
-```mermaid
-flowchart TD
-    A[输入: 文献标题/摘要/关键词/已有数据库] --> B[01 Corpus Profile Agent]
-    B --> C[02 Problem Landscape Agent]
-    C --> D[03 Candidate Generator Agent]
-    D --> E[04 Collision Planner Agent]
-    E --> F[05 Novelty & Feasibility Critic]
-    F --> G[06 MVE Designer Agent]
-    G --> H[07 Decision Gate Arbiter]
-    H --> I[08 Roadmap & Historian Agent]
-    I --> J[输出: topic_selection_report.md]
-```
+Recommended target path: `README_GITHUB_SUPPLEMENT.md`
 
-### Agent 分工
+## Clean installation
 
-| Agent | 作用 | 主要输出 |
-|---|---|---|
-| 01 Corpus Profile Agent | 识别语料范围、主题密度、热点堆积和数据质量 | `01_corpus_profile.json` |
-| 02 Problem Landscape Agent | 从材料科学角度构建问题地图 | `02_problem_landscape.json` |
-| 03 Candidate Generator Agent | 生成候选选题，避免泛泛而谈 | `03_candidate_topics.json` |
-| 04 Collision Planner Agent | 为每个候选方向生成撞车检索计划 | `04_collision_plan.json` |
-| 05 Novelty & Feasibility Critic | 评估创新性、可控性、仪器需求、失败风险 | `05_critic_review.json` |
-| 06 MVE Designer Agent | 设计最小验证实验和 kill criteria | `06_mve_designs.json` |
-| 07 Decision Gate Arbiter | 输出 GO / CONDITIONAL GO / NO-GO 决策 | `07_decision_gate.json` |
-| 08 Roadmap & Historian Agent | 生成硕士-博士延展路线与记忆更新 | `08_roadmap_memory.json` |
-
----
-
-## 05. JSON-first：降低 token 消耗
-
-这个 Skill 不要求每个 Agent 反复阅读全文语料。所有中间态都以 JSON 文件传递：
-
-```text
-state/
-├── 01_corpus_profile.json
-├── 02_problem_landscape.json
-├── 03_candidate_topics.json
-├── 04_collision_plan.json
-├── 05_critic_review.json
-├── 06_mve_designs.json
-├── 07_decision_gate.json
-└── 08_roadmap_memory.json
-```
-
-每个 Agent 只读取自己需要的局部 JSON，减少长上下文重复消耗，也方便人工审查和版本控制。
-
----
-
-## 06. 输入与输出
-
-### 输入
-
-```text
-inputs/
-├── papers.csv              # 标题、摘要、年份、DOI、关键词等
-├── constraints.yaml        # 研究边界、排除方向、设备条件、时间窗口
-├── user_context.md         # 当前研究基础与个人目标，可选
-└── prior_topics.json       # 已淘汰或已确认的旧选题，可选
-```
-
-`papers.csv` 推荐字段：
-
-```text
-title, abstract, year, journal, doi, keywords, system, material, performance_metric
-```
-
-### 输出
-
-```text
-outputs/
-├── topic_selection_report.md        # 主报告
-├── candidate_scoreboard.csv         # 候选方向评分表
-├── collision_queries.csv            # 撞车检索式
-├── mve_plan.csv                     # 最小验证实验表
-├── decision_summary.json            # GO / CONDITIONAL GO / NO-GO 总结
-└── state/*.json                     # Agent 中间态
-```
-
----
-
-## 07. 决策框架
-
-每个候选方向会被打分，但最终不是简单按总分排序，而是进入决策门：
-
-| 决策 | 含义 |
-|---|---|
-| `GO` | 科学问题明确，撞车风险可控，MVE 可执行，具备论文潜力 |
-| `CONDITIONAL GO` | 有潜力，但必须先补检索、补数据或降低命题强度 |
-| `NO-GO` | 科学问题弱、撞车严重、实验不可控或过度 AI 套皮 |
-
-默认评分维度：
-
-```text
-scientific_problem_strength
-novelty_potential
-collision_risk_inverse
-experimental_feasibility
-data_availability
-mve_clarity
-publication_potential
-phd_continuity
-ai_necessity
-```
-
----
-
-## 08. 面向材料方向的默认适配
-
-本 Skill 可用于一般化工与材料研究，但默认示例面向：
-
-```text
-biomass-derived carbon materials
-hard carbon
-porous carbon
-aqueous supercapacitors
-sodium-ion batteries
-lithium-ion batteries
-AI for materials
-literature-derived datasets
-Bayesian optimization
-structure-property relationship
-```
-
-默认会警惕以下低质量方向：
-
-- 只做“数据库 + XGBoost + SHAP”的开环套路；
-- 无实验闭环支撑的“自动发现材料”；
-- 缺少材料机制的纯算法包装；
-- 已经高度拥挤但没有新变量、新指标或新验证协议的方向；
-- 设备条件、样品数量、周期和导师资源明显不匹配的方向。
-
----
-
-## 09. 快速开始
-
-### 安装
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
-pip install -e .
 ```
 
-### 运行 demo
+Run a basic package check:
 
 ```bash
-python examples/run_demo.py
+python scripts/verify_skill_package.py .
 ```
 
-### 命令行运行
+Run tests:
 
 ```bash
-python -m research_topic_selection_skill.cli run \
-  --corpus examples/input/demo_papers.csv \
-  --constraints examples/input/constraints.yaml \
-  --out outputs/demo_topic_selection
+pytest -q
 ```
 
----
-
-## 10. 示例输出摘要
-
-运行 demo 后会看到类似结果：
+## Recommended Codex prompt
 
 ```text
-Decision summary
-- GO: 1
-- CONDITIONAL GO: 2
-- NO-GO: 1
-
-Top candidate:
-Composition-normalized biomass hard-carbon precursor screening
-
-Why:
-- clear science problem
-- feasible MVE
-- moderate collision risk
-- strong master-to-PhD continuity
+Use this repository as a research-topic-selection skill.
+Start a fresh run unless I explicitly ask you to continue a previous task.
+Do not use historical task outputs as evidence.
+Use AGENTS.md, skills, schemas, scripts, and relevant domain packs only.
+Evaluate the topic with the lowest sufficient mode, but do not let a low requested mode override high-consequence decisions.
 ```
 
----
+## Data policy
 
-## 11. 仓库结构
+This repository should not include private literature exports, old task outputs, unpublished datasets, or full-text PDFs. Put those files in a private workspace and reference them explicitly when needed.
 
-```text
-research-topic-selection-skill-v3/
-├── README.md
-├── README_en.md
-├── skill.md
-├── AGENTS.md
-├── pyproject.toml
-├── requirements.txt
-├── config/
-│   ├── scoring_rules.yaml
-│   ├── topic_scope.yaml
-│   └── collision_rules.yaml
-├── prompts/
-│   ├── 01_corpus_profile_agent.md
-│   ├── 02_problem_landscape_agent.md
-│   ├── 03_candidate_generator_agent.md
-│   ├── 04_collision_planner_agent.md
-│   ├── 05_novelty_feasibility_critic.md
-│   ├── 06_mve_designer_agent.md
-│   ├── 07_decision_gate_arbiter.md
-│   └── 08_roadmap_historian_agent.md
-├── schemas/
-│   ├── corpus_profile.schema.json
-│   ├── candidate_topics.schema.json
-│   ├── collision_plan.schema.json
-│   ├── critic_review.schema.json
-│   ├── mve_design.schema.json
-│   └── decision_summary.schema.json
-├── src/research_topic_selection_skill/
-│   ├── cli.py
-│   ├── corpus.py
-│   ├── candidates.py
-│   ├── collision.py
-│   ├── scoring.py
-│   ├── mve.py
-│   ├── report.py
-│   └── utils.py
-├── examples/
-├── tests/
-└── docs/
-```
+## Minimal useful file additions
 
----
+If the existing folder is already present, the most important additional files are:
 
-## 12. 与其他 Skill 的关系
+1. `.gitignore`
+2. `requirements.txt`
+3. `AGENTS_APPEND_STATE_ISOLATION.md`
+4. `WORKSPACE_POLICY.md`
+5. `docs/domain_packs/biomass_hard_carbon_sib.md`
+6. `scripts/verify_skill_package.py`
+7. `tests/test_route_evaluation_mode.py`
+8. `tests/test_schema_validation.py`
 
-这个 Skill 更适合作为研究工作流的第一步：
+## Important maintenance rule
 
-```text
-research-topic-selection-skill-v3
-        ↓
-ai-extracted-data-cleaner
-        ↓
-carbon-literature-bo-replay-skill
-        ↓
-materials-review-audit-skill
-```
-
-对应关系：
-
-| Skill | 作用 |
-|---|---|
-| `research-topic-selection-skill-v3` | 选题筛选、撞车规划、MVE 设计 |
-| `ai-extracted-data-cleaner` | 清洗 AI/OCR 提取的文献数据 |
-| `carbon-literature-bo-replay-skill` | 在文献数据库上做离线 BO 回放 |
-| `materials-review-audit-skill` | 综述投稿前一致性审计 |
-
----
-
-## 13. 使用边界
-
-这个 Skill 不会替代导师判断，也不会自动证明选题创新。它的职责是：
-
-- 把隐含假设显性化；
-- 把候选方向转化为可检索、可验证、可否决的结构化对象；
-- 让选题决策从“感觉有意思”变成“证据、风险和实验闭环可审计”。
-
-建议最终输出仍需结合：
-
-- 真实全文检索；
-- 设备与经费条件；
-- 导师组方向；
-- 样品制备能力；
-- 目标期刊要求。
-
----
-
-## 14. License
-
-MIT License.
-
+When a test fails, do not immediately change the test to pass. First decide whether the skill logic or schema should be corrected. Tests are intended to catch silent context contamination and unsafe mode downgrading.

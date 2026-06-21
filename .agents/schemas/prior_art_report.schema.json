@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PriorArtReport",
+  "type": "object",
+  "required": [
+    "direct_prior_art",
+    "adjacent_prior_art",
+    "novelty_threats",
+    "safe_space",
+    "prior_art_risk_score"
+  ],
+  "properties": {
+    "direct_prior_art": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "adjacent_prior_art": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "novelty_threats": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "safe_space": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "unsafe_claims": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "recommended_boundary": {
+      "type": "string"
+    },
+    "prior_art_risk_score": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5
+    }
+  },
+  "additionalProperties": true
+}

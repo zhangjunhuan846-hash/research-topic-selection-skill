@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CollapseTestReport",
+  "type": "object",
+  "required": [
+    "attacks",
+    "survivability_label",
+    "required_change"
+  ],
+  "properties": {
+    "attacks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "attack_name",
+          "result",
+          "severity"
+        ],
+        "properties": {
+          "attack_name": {
+            "type": "string"
+          },
+          "result": {
+            "type": "string"
+          },
+          "severity": {
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "fatal"
+            ]
+          }
+        }
+      }
+    },
+    "survivability_label": {
+      "enum": [
+        "survives",
+        "survives_if_narrowed",
+        "needs_pivot",
+        "collapses"
+      ]
+    },
+    "required_change": {
+      "type": "string"
+    },
+    "reviewer_rejection_path": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

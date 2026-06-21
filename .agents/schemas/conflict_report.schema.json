@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ConflictReport",
+  "type": "object",
+  "required": [
+    "trigger_reason",
+    "advocate_position",
+    "skeptic_position",
+    "arbiter_resolution"
+  ],
+  "properties": {
+    "trigger_reason": {
+      "type": "string"
+    },
+    "advocate_position": {
+      "type": "string"
+    },
+    "skeptic_position": {
+      "type": "string"
+    },
+    "arbiter_resolution": {
+      "type": "string"
+    },
+    "recommended_decision": {
+      "enum": [
+        "GO",
+        "REVISE",
+        "NARROW",
+        "PIVOT",
+        "KILL"
+      ]
+    },
+    "non_negotiable_changes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NoveltyGateReport",
+  "type": "object",
+  "required": [
+    "novelty_statement_one_sentence",
+    "novelty_type",
+    "novelty_quality",
+    "weakest_link",
+    "required_evidence_to_defend",
+    "novelty_decision"
+  ],
+  "properties": {
+    "novelty_statement_one_sentence": {
+      "type": "string"
+    },
+    "novelty_type": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "new_problem_definition",
+          "new_descriptor_framework",
+          "new_cross-system_comparison",
+          "new_dataset_or_benchmark",
+          "new_experimental_control",
+          "new_mechanistic_test",
+          "new_theory_or_model",
+          "new_application_boundary"
+        ]
+      }
+    },
+    "novelty_quality": {
+      "enum": [
+        "weak",
+        "moderate",
+        "strong",
+        "very_strong"
+      ]
+    },
+    "novelty_rationale": {
+      "type": "string"
+    },
+    "weakest_link": {
+      "type": "string"
+    },
+    "required_evidence_to_defend": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "novelty_decision": {
+      "enum": [
+        "pass",
+        "conditional_pass",
+        "fail"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,20 @@
+{
+  "name": "methodology_auditor",
+  "purpose": "High-risk audit of hypothesis testability, controls, endpoints, statistics, and confounding risks.",
+  "inputs": [
+    "topic_intake.json",
+    "trigger_decision.json",
+    "evidence_pack.json",
+    "novelty_gate_report.json",
+    "feasibility_report.json",
+    "collapse_test_report.json"
+  ],
+  "outputs": [
+    "methodology_audit.md"
+  ],
+  "rules": [
+    "Define a falsifiable primary endpoint.",
+    "Identify confounders that can invalidate the conclusion.",
+    "Prefer minimal decisive tests over bloated methods."
+  ]
+}

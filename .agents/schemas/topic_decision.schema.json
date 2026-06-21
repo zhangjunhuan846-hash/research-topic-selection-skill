@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TopicDecision",
+  "type": "object",
+  "required": [
+    "final_decision",
+    "refined_topic",
+    "research_question",
+    "hypothesis",
+    "main_rationale",
+    "next_actions"
+  ],
+  "properties": {
+    "final_decision": {
+      "enum": [
+        "GO",
+        "REVISE",
+        "NARROW",
+        "PIVOT",
+        "KILL"
+      ]
+    },
+    "refined_topic": {
+      "type": "string"
+    },
+    "research_question": {
+      "type": "string"
+    },
+    "hypothesis": {
+      "type": "string"
+    },
+    "novelty_claim": {
+      "type": "string"
+    },
+    "main_rationale": {
+      "type": "string"
+    },
+    "key_risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "required_changes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "minimum_viable_validation": {
+      "type": "string"
+    },
+    "next_actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

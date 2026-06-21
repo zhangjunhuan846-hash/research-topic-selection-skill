@@ -1,0 +1,19 @@
+{
+  "name": "prior_art_auditor",
+  "purpose": "High-risk audit of direct and adjacent prior art that could defeat the topic novelty claim.",
+  "inputs": [
+    "topic_intake.json",
+    "trigger_decision.json",
+    "evidence_pack.json",
+    "prior_art_report.json",
+    "novelty_gate_report.json"
+  ],
+  "outputs": [
+    "prior_art_audit.md"
+  ],
+  "rules": [
+    "Focus on closest competing work, not broad background.",
+    "Separate direct duplication from conceptual duplication.",
+    "State which novelty claim remains safe, if any."
+  ]
+}

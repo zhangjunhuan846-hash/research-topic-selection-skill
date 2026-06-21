@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ArchiveRecord",
+  "type": "object",
+  "required": [
+    "timestamp",
+    "task_name",
+    "iteration",
+    "final_decision",
+    "paths"
+  ],
+  "properties": {
+    "timestamp": {
+      "type": "string"
+    },
+    "task_name": {
+      "type": "string"
+    },
+    "iteration": {
+      "type": "string"
+    },
+    "final_decision": {
+      "enum": [
+        "GO",
+        "REVISE",
+        "NARROW",
+        "PIVOT",
+        "KILL"
+      ]
+    },
+    "summary": {
+      "type": "string"
+    },
+    "paths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "selected_mode": {
+      "enum": [
+        "LIGHT",
+        "STANDARD",
+        "HIGH_RISK"
+      ]
+    },
+    "trigger_reasons": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}

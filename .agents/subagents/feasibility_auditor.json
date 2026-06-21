@@ -1,0 +1,19 @@
+{
+  "name": "feasibility_auditor",
+  "purpose": "High-risk audit of whether the topic can be executed under current resources, instruments, data, and time.",
+  "inputs": [
+    "topic_intake.json",
+    "trigger_decision.json",
+    "evidence_pack.json",
+    "feasibility_report.json",
+    "collapse_test_report.json"
+  ],
+  "outputs": [
+    "feasibility_audit.md"
+  ],
+  "rules": [
+    "Distinguish essential requirements from optional improvements.",
+    "Provide early stop rules.",
+    "Recommend narrowing if resources are insufficient."
+  ]
+}

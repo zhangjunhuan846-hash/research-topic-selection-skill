@@ -1,0 +1,36 @@
+{
+  "candidate_topic": "Protocol-controlled evaluation of a material descriptor for improving an electrochemical performance endpoint.",
+  "field_boundary": "A clearly bounded materials system, one primary descriptor, one primary performance endpoint, and a frozen comparison protocol.",
+  "non_boundary": [
+    "Broad review-style topic",
+    "Uncontrolled material substitution",
+    "All device systems",
+    "Commercial product optimization"
+  ],
+  "task_type": [
+    "topic_validation",
+    "novelty_check",
+    "feasibility_check",
+    "decision_brief"
+  ],
+  "risk_level": "medium",
+  "available_evidence": [
+    "Initial literature search",
+    "Small descriptor table",
+    "Preliminary experimental capability"
+  ],
+  "available_capabilities": [
+    "literature synthesis",
+    "small-scale validation experiment",
+    "basic characterization"
+  ],
+  "claimed_novelty": "The topic claims that a controlled descriptor explains the endpoint better than a broad material label.",
+  "target_journal_level": "specialist or interdisciplinary materials journal",
+  "target_output": "GO / REVISE / NARROW / PIVOT / KILL decision brief",
+  "decision_consequence": [
+    "advisor_discussion",
+    "paper_plan"
+  ],
+  "evidence_tier_available": "mixed",
+  "token_budget_preference": "balanced"
+}

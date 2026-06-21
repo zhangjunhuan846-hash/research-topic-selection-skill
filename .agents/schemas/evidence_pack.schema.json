@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EvidencePack",
+  "type": "object",
+  "required": [
+    "topic_id",
+    "evidence_items",
+    "evidence_limits"
+  ],
+  "properties": {
+    "topic_id": {
+      "type": "string"
+    },
+    "evidence_items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "claim",
+          "support_type",
+          "source_ids"
+        ],
+        "properties": {
+          "claim": {
+            "type": "string"
+          },
+          "support_type": {
+            "enum": [
+              "direct_support",
+              "partial_support",
+              "counterevidence",
+              "background",
+              "inference"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "confidence": {
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "direct_prior_art_candidates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "adjacent_prior_art_candidates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "evidence_limits": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": true
+}
